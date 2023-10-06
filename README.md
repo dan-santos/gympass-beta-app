@@ -41,3 +41,4 @@ Dados:
 - [ ] Os dados da aplicação precisam estar persistidos no PostgreSQL;
 - [ ] Todas listas de dados precisam estar paginadas com 20 itens por página;
 - [ ] O usuário deve ser identificado por um JWT;
+7DsnDVx!XToz

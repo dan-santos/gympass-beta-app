@@ -1,13 +1,24 @@
 import fastify from 'fastify';
-import { PrismaClient } from '@prisma/client';
+import { appRoutes } from './http/routes';
+import { ZodError } from 'zod';
+import { env } from './env';
 
 export const app = fastify();
 
-const prisma = new PrismaClient();
+app.register(appRoutes);
 
-prisma.user.create({
-  data: {
-    name: 'Daniel F.',
-    email: 'dfs.dev.io@gmail.com',
+app.setErrorHandler((err, _, res) => {
+  if (err instanceof ZodError) {
+    return res.status(400).send(
+      { message: 'Validation error', issues: err.format() }
+    );
   }
+
+  if (env.NODE_ENV !== 'prd') {
+    console.error(err);
+  } else {
+    // TODO: Here we should log to external tool like NewRelic or Sentry
+  }
+
+  return res.status(500).send({ message: 'Internal Server Error' });
 });
