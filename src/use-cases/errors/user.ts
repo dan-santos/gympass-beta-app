@@ -3,3 +3,9 @@ export class UserAlreadyExistsError extends Error{
     super('Email already exists');
   }
 }
+
+export class InvalidCredentialsError extends Error{
+  constructor() {
+    super('Credentials are invalid');
+  }
+}
