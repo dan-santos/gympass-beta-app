@@ -5,10 +5,14 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint src --ext .ts",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test:create": "npm link ./prisma/vitest-environment-prisma",
+    "test:install": "npm link vitest-environment-prisma",
+    "test": "vitest run --dir src/use-cases",
+    "test:watch": "vitest --dir src/use-cases",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
+    "pretest:e2e": "run-s test:create test:install",
+    "test:e2e": "vitest run --dir src/http",
     "dev": "tsx watch src/server.ts",
     "prd": "node build/server.js",
     "build": "tsup --out-dir build"
@@ -19,19 +23,23 @@
   "devDependencies": {
     "@types/bcryptjs": "2.4.4",
     "@types/node": "20.8.2",
+    "@types/supertest": "2.0.14",
     "@typescript-eslint/eslint-plugin": "6.7.4",
     "@typescript-eslint/parser": "6.7.4",
     "@vitest/coverage-v8": "0.34.6",
     "@vitest/ui": "0.34.6",
     "eslint": "8.50.0",
+    "npm-run-all": "4.1.5",
     "prisma": "5.4.1",
+    "supertest": "6.3.3",
     "tsup": "7.2.0",
     "tsx": "3.13.0",
     "typescript": "5.2.2",
     "vite-tsconfig-paths": "4.2.1",
-    "vitest": "0.34.6"
+    "vitest": "0.33.0"
   },
   "dependencies": {
+    "@fastify/jwt": "7.2.1",
     "@prisma/client": "5.4.1",
     "bcryptjs": "2.4.3",
     "dayjs": "1.11.10",
