@@ -1,5 +1,5 @@
 [![Vitest unit-tests](https://github.com/dan-santos/gympass-beta-app/actions/workflows/run-unit-tests.yml/badge.svg)](https://github.com/dan-santos/gympass-beta-app/actions/workflows/run-unit-tests.yml)
-
+[![Run e2e Tests](https://github.com/dan-santos/gympass-beta-app/actions/workflows/run-e2e-tests.yml/badge.svg)](https://github.com/dan-santos/gympass-beta-app/actions/workflows/run-e2e-tests.yml)
 # 3o. projeto da trilha Ignite de Node.Js
 Web App de academia "Gympass Beta" com foco em SOLID
 ---
