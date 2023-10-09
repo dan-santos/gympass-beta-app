@@ -17,15 +17,38 @@ export async function authenticate(req: FastifyRequest, res: FastifyReply) {
     const { user } = await authenticateUseCase.execute({ email, password });
 
     // by convention, the user ID is assigned in "sub" attribute of JWT
-    const token = await res.jwtSign({}, {
-      sign: {
-        sub: user.id,
+    const token = await res.jwtSign(
+      {
+        role: user.role,
       },
-    });
+      {
+        sign: {
+          sub: user.id,
+        },
+      });
 
-    return res.status(200).send({
-      token,
-    });
+    const refreshToken = await res.jwtSign(
+      {
+        role: user.role,
+      }, 
+      {
+        sign: {
+          sub: user.id,
+          expiresIn: '7d',
+        },
+      });
+
+    return res
+      .setCookie('refreshToken', refreshToken, {
+        path: '/',
+        secure: true,
+        sameSite: true,
+        httpOnly: true,
+      })
+      .status(200)
+      .send({
+        token,
+      });
   } catch (err) {
     if (err instanceof InvalidCredentialsError) {
       return res.status(400).send({ message: err.message });
